@@ -7,13 +7,6 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ];
 
-export const addVote = (id) => {
-  return {
-    type: 'ADD_VOTE',
-    payload: { id }
-  }
-};
-
 const getId = () => (100000 * Math.random()).toFixed(0);
 
 const asObject = (anecdote) => {
@@ -44,8 +37,28 @@ const reducer = (state = initialState, action) => {
         anecdote.id !== id ? anecdote : updatedAnecdote
       );
       return anecdotesAtTheEnd;
+    case 'NEW_ANECDOTE':
+      return [...state, action.payload];
     default:
       return state;
+  }
+};
+
+export const addVote = (id) => {
+  return {
+    type: 'ADD_VOTE',
+    payload: { id }
+  }
+};
+
+export const createAnecdote = (content) => {
+  return {
+    type: 'NEW_ANECDOTE',
+    payload: {
+      content,
+      id: getId(),
+      votes: 0,
+    }
   }
 };
 
