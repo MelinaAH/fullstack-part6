@@ -19,9 +19,9 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject);
 
-const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+const anecdoteReducer = (state = initialState, action) => {
+  console.log('state now: ', state);
+  console.log('action: ', action);
 
   // eslint-disable-next-line default-case
   switch (action.type) {
@@ -62,4 +62,4 @@ export const createAnecdote = (content) => {
   }
 };
 
-export default reducer;
+export default anecdoteReducer;
