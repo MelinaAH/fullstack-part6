@@ -6,16 +6,16 @@ const AnecdoteList = () => {
 
   const anecdotes = useSelector(({ anecdotes, filter }) => {
     if (filter) {
-      //filters anecdotes inside {}
-      return anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase()));
-      
+      //filters anecdotes inside {} using immutability principle
+      return [...anecdotes].filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase()));
     }
-    return anecdotes.sort((a, b) => b.votes - a.votes);
+    return [...anecdotes].sort((a, b) => b.votes - a.votes);
   });
 
-  const vote = (id) => {
-    console.log('vote', id);
-    dispatch(addVote(id));
+  const vote = (id, votes) => {
+    console.log('function vote id:', id);
+    console.log('function vote votes:', votes);
+    dispatch(addVote({ id, votes }));
   };
 
   return (
@@ -27,7 +27,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote.id, anecdote.votes)}>vote</button>
           </div>
         </div>
       )}
