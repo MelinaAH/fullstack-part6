@@ -16,7 +16,7 @@ const anecdoteSlice = createSlice({
       console.log(JSON.parse(JSON.stringify(state)));
 
       const updatedAnecdote = {
-        ...votedAnecdote, votes: votes + 1
+        ...votedAnecdote, votes: votes
       };
 
       const anecdotesAtTheEnd = state.map((anecdote) =>
