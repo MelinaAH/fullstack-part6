@@ -12,12 +12,14 @@ const notificationSlice = createSlice({
   }
 });
 
-export const showNotification = (message) => async (dispatch) => {
-  dispatch(votedNotification(message));
-  setTimeout(() => {
-    dispatch(votedNotification(''));
-  }, 5000);
-}
+export const showNotification = (message, time) => {
+  return (dispatch) => {
+    dispatch(votedNotification(message));
+    setTimeout(() => {
+      dispatch(votedNotification(''));
+    }, time * 1000);
+  };
+};
 
 export const { votedNotification } = notificationSlice.actions;
 export default notificationSlice.reducer;
