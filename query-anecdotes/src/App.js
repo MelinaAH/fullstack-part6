@@ -2,6 +2,8 @@ import AnecdoteForm from './components/AnecdoteForm';
 import Notification from './components/Notification';
 import { useQuery, useMutation, useQueryClient, QueryClient } from 'react-query';
 import { getAnecdotes, updateAnecdote } from './requests';
+import { useContext } from 'react';
+import AnecdoteContext from './AnecdoteContext';
 
 const App = () => {
   const queryClient = useQueryClient();
@@ -12,7 +14,9 @@ const App = () => {
     onSuccess: () => {
       queryClient.invalidateQueries('anecdotes')
     },
-  })
+  });
+
+  const [noticifier, noticifierDispatch] = useContext(AnecdoteContext);
 
   const handleVote = (anecdote) => {
     console.log('voted anecdote: ', anecdote);
@@ -20,6 +24,7 @@ const App = () => {
       ...anecdote, votes: anecdote.votes + 1
     };
     updateAnecdoteMutation.mutate(updatedAnecdote);
+    noticifierDispatch({type: 'VOTE', payload: `anecdote "${anecdote.content} voted`});
   };
 
   if (result.isLoading) {
