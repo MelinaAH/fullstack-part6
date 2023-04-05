@@ -13,16 +13,24 @@ const AnecdoteForm = () => {
       const anecdotes = queryClient.getQueryData('anecdotes');
       queryClient.setQueryData('anecdotes', anecdotes.concat(newAnecdote));
     },
+    onError: (error) => {
+      dispatch({ type: 'ADD', payload: 'too short anecdote, must have length 5 or more' });
+    }
   });
 
   const onCreate = async (event) => {
     event.preventDefault();
     const content = event.target.anecdote.value;
-    event.target.anecdote.value = '';
-    console.log('new anecdote');
-    newAnecdoteMutation.mutate({ content });
-    dispatch({type: 'ADD', payload: `anecdote "${content} added`});
-};
+    if (content.length < 5) {
+      dispatch({ type: 'ADD', payload: 'too short anecdote, must have length 5 or more' });
+    }
+    else {
+      event.target.anecdote.value = '';
+      console.log('new anecdote');
+      newAnecdoteMutation.mutate({ content });
+      dispatch({ type: 'ADD', payload: `anecdote "${content} added` });
+    }
+  };
 
   return (
     <div>
