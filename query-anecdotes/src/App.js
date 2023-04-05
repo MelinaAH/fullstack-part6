@@ -4,19 +4,11 @@ import { useQuery } from 'react-query';
 import { getAnecdotes } from './requests';
 
 const App = () => {
-  const result = useQuery('anecdotes', getAnecdotes, {retry: false});
+  const result = useQuery('anecdotes', getAnecdotes, { retry: false });
 
   const handleVote = (anecdote) => {
     console.log('vote')
   };
-
-  /*const anecdotes = [
-    {
-      "content": "If it hurts, do it more often",
-      "id": "47145",
-      "votes": 0
-    },
-  ];*/
 
   if (result.isLoading) {
     return <div>loading data...</div>
@@ -31,10 +23,10 @@ const App = () => {
   return (
     <div>
       <h3>Anecdote app</h3>
-    
+
       <Notification />
       <AnecdoteForm />
-    
+
       {anecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
